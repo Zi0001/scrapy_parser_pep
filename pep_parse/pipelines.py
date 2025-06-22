@@ -1,5 +1,3 @@
-from itemadapter import ItemAdapter
-
 from collections import defaultdict
 from datetime import datetime
 
