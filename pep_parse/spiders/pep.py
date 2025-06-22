@@ -12,14 +12,6 @@ class PepSpider(scrapy.Spider):
         for link in response.css('a.pep::attr(href)'):
             yield response.follow(link, callback=self.parse_pep)
 
-
-            # yield {
-            #     'link': link.get()
-            # }
-        # for pep in response.css('tbody tr::text'):
-        #     yield {
-        #         'number': pep.css('a.pep reference internal::text').get()
-        #     }
     def parse_pep(self, response):
         data = {
             'number': response.css('h1.page-title::text').re_first(r'PEP (\d+)'),

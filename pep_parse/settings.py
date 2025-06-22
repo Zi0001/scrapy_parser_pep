@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+from pathlib import Path
 
 BOT_NAME = 'pep_parse'
 
@@ -18,6 +19,10 @@ NEWSPIDER_MODULE = 'pep_parse.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+BASE_DIR = Path(__file__).parent.parent
+RESULTS_DIR = 'results'
+RESULTS_PATH = BASE_DIR / RESULTS_DIR
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -89,14 +94,13 @@ ROBOTSTXT_OBEY = True
 
 
 FEEDS = {
-    'results/pep_%(time)s.csv': {
+    f'{RESULTS_DIR}/pep_%(time)s.csv': {
         'format': 'csv',
         'fields': ['number', 'name', 'status'],
         'overwrite': True
     }
 }
 
-
 ITEM_PIPELINES = {
-    'pep_parse.pipelines.StatusSummaryPipeline': 300,
+    'pep_parse.pipelines.PepParsePipeline': 300,
 }
