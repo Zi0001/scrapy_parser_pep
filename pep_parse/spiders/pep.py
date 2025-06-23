@@ -1,5 +1,4 @@
 import scrapy
-
 from pep_parse.items import PepParseItem
 
 
@@ -9,8 +8,11 @@ class PepSpider(scrapy.Spider):
     start_urls = ['https://peps.python.org/']
 
     def parse(self, response):
-        for link in response.css('a.pep::attr(href)'):
-            yield response.follow(link, callback=self.parse_pep)
+        table_xpath = '//section[@id="numerical-index"]'
+        link_xpath = './/a[contains(@href, "pep-")]/@href'
+        for link in response.xpath(table_xpath).xpath(link_xpath):
+            pep_url = link.get().rstrip('/') + '/'
+            yield response.follow(pep_url, callback=self.parse_pep)
 
     def parse_pep(self, response):
         data = {

@@ -29,4 +29,4 @@
 5. pathlib
 
 ## Над проектом работал
-> Учадзе З.Т.
+> Учадзе З.Т. https://github.com/Zi0001/scrapy_parser_pep.git
